@@ -6,23 +6,23 @@ class RoundedButton extends StatelessWidget {
     Key? key,
     this.border,
     required this.text,
+    required this.width,
     required this.action,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,
   }) : super(key: key);
 
   final String text;
+  final double width;
   final BoxBorder? border;
   final void Function() action;
   final Color color, textColor;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      width: size.width * 0.8,
+      width: width,
       decoration: BoxDecoration(
         border: border,
         borderRadius: BorderRadius.circular(15),

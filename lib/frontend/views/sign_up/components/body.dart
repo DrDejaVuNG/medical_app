@@ -14,7 +14,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -22,8 +22,7 @@ class Body extends StatelessWidget {
             const FormWidget(),
             Padding(
               padding: const EdgeInsets.only(
-                left: 20,
-                right: 10,
+                left: 30,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,8 +63,13 @@ class Body extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            RoundedButton(text: 'Continue', action: () {}),
-            AccountCheckNav(              firstText: 'Joined us before?',
+            RoundedButton(
+              text: 'Continue',
+              width: MediaQuery.of(context).size.width * 0.8,
+              action: () {},
+            ),
+            AccountCheckNav(
+              firstText: 'Joined us before?',
               secondText: 'Login',
               action: () {
                 Navigator.push(

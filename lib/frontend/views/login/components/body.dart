@@ -35,6 +35,7 @@ class Body extends StatelessWidget {
             const SizedBox(height: 10),
             RoundedButton(
               text: 'Login',
+              width: MediaQuery.of(context).size.width * 0.8,
               action: () {
                 Navigator.push(
                   context,

@@ -12,50 +12,55 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
-            const Text(
-              'WELCOME!',
-              style: TextStyle(
-                color: kPrimaryColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 20),
+              const Text(
+                'WELCOME!',
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-            ),
-            Image.asset('assets/images/welcome.jpg'),
-            RoundedButton(
-              text: 'LOGIN',
-              textColor: Colors.white,
-              color: kPrimaryColor,
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const LoginView();
-                  }),
-                );
-              },
-            ),
-            RoundedButton(
-              text: 'SIGN UP',
-              textColor: kPrimaryColor,
-              color: kPrimaryLightColor,
-              border: Border.all(
+              const SizedBox(height: 10),
+              Image.asset('assets/images/welcome.jpg'),
+              RoundedButton(
+                text: 'LOGIN',
+                textColor: Colors.white,
                 color: kPrimaryColor,
-                width: 1.5,
+                width: MediaQuery.of(context).size.width * 0.8,
+                action: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const LoginView();
+                    }),
+                  );
+                },
               ),
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return const SignUpView();
-                  }),
-                );
-              },
-            ),
-          ],
+              RoundedButton(
+                text: 'SIGN UP',
+                textColor: kPrimaryColor,
+                color: kPrimaryLightColor,
+                border: Border.all(
+                  color: kPrimaryColor,
+                  width: 1.5,
+                ),
+                width: MediaQuery.of(context).size.width * 0.8,
+                action: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const SignUpView();
+                    }),
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
