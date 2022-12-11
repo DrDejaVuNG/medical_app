@@ -1,4 +1,4 @@
-package com.drdejavu.medical_app
+package com.example.medical_app
 
 import io.flutter.embedding.android.FlutterActivity
 

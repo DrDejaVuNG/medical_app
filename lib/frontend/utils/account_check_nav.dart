@@ -37,3 +37,5 @@ class AccountCheckNav extends StatelessWidget {
     );
   }
 }
+
+// could have just mad it an elevated button

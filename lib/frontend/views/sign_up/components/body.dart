@@ -1,8 +1,9 @@
-import 'package:medical_app/config/constants.dart';
-import 'package:medical_app/frontend/utilities/account_check_nav.dart';
-import 'package:medical_app/frontend/utilities/rounded_button.dart';
-import 'package:medical_app/frontend/utilities/text_input.dart';
+import 'form.dart';
+import 'package:medical_app/frontend/views/login/login.dart';
 import 'package:flutter/material.dart';
+import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/frontend/utils/account_check_nav.dart';
+import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
   const Body({
@@ -11,101 +12,70 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, bottom: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              IconButton(
-                alignment: Alignment.topLeft,
-                padding: const EdgeInsets.only(top: 10),
-                splashRadius: 20,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(Icons.arrow_back),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/signup.jpg'),
+            const FormWidget(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 10,
               ),
-            ],
-          ),
-          Image.asset('assets/images/signup.jpg'),
-          const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.only(left: 10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Sign up',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: const [
+                      Text(
+                        'By signing up, you agree to our ',
+                        style: TextStyle(color: kBackground, fontSize: 13),
+                      ),
+                      Text(
+                        'Terms & Conditions ',
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                TextInput(
-                  text: 'Email ID',
-                  icon: Icon(Icons.alternate_email),
-                ),
-                TextInput(
-                  text: 'Full Name',
-                  icon: Icon(Icons.person_outline),
-                ),
-                TextInput(
-                  text: 'Mobile',
-                  icon: Icon(Icons.phone_iphone_outlined),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: const [
-                    Text(
-                      'By signing up, you agree to our ',
-                      style: TextStyle(color: kBackground, fontSize: 13),
-                    ),
-                    Text(
-                      'Terms & Conditions ',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    children: const [
+                      Text(
+                        'and ',
+                        style: TextStyle(color: kBackground, fontSize: 13),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: const [
-                    Text(
-                      'and ',
-                      style: TextStyle(color: kBackground, fontSize: 13),
-                    ),
-                    Text(
-                      'Privacy Policy',
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        'Privacy Policy',
+                        style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          RoundedButton(text: 'Continue', action: () {}),
-          AccountCheckNav(
-            firstText: 'Joined us before?',
-            secondText: 'Login',
-            action: () {},
-          )
-        ],
+            const SizedBox(height: 8),
+            RoundedButton(text: 'Continue', action: () {}),
+            AccountCheckNav(              firstText: 'Joined us before?',
+              secondText: 'Login',
+              action: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/frontend/views/login/login.dart';
 import 'package:flutter/material.dart';
-import '../../../utilities/rounded_button.dart';
+import '../../../utils/rounded_button.dart';
 import '../../sign_up/sign_up.dart';
 
 class Body extends StatelessWidget {
