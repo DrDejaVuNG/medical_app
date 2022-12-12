@@ -6,6 +6,7 @@ import 'components/pill_slider.dart';
 import 'components/appointment_card.dart';
 import 'components/appointment_count.dart';
 import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/frontend/views/schedule/schedule.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -27,7 +28,7 @@ class HomeView extends StatelessWidget {
                 child: Row(
                   children: [
                     const Greeting(),
-                    const Spacer(),
+                    const SizedBox(width: 120),
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
@@ -35,7 +36,14 @@ class HomeView extends StatelessWidget {
                       ),
                       child: IconButton(
                         padding: const EdgeInsets.all(0),
-                        onPressed: () {},
+                        splashRadius: 25,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ScheduleView()),
+                          );
+                        },
                         icon: const Icon(
                           Icons.calendar_month_outlined,
                           size: 22,
@@ -45,7 +53,7 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               const AppointmentCount(),
               const SizedBox(height: 30),
               const AppointmentCard(),
@@ -55,7 +63,13 @@ class HomeView extends StatelessWidget {
                   children: [
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const ScheduleView()),
+                        );
+                      },
                       child: const Text(
                         'See all',
                         style: TextStyle(

@@ -6,8 +6,8 @@ class AppointView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -16,7 +16,7 @@ class AppointView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.pop(context),
                     splashRadius: 30,
                     icon: const Icon(Icons.arrow_back_rounded),
                   ),
@@ -80,6 +80,99 @@ class AppointView extends StatelessWidget {
                         style: TextStyle(fontSize: 15),
                       ),
                     ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 20,
+                          width: 20,
+                          decoration: BoxDecoration(
+                            color: kPrimaryColor,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Headaches',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      children: [
+                        const Icon(Icons.date_range_outlined),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              'December 12, 2022',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 3),
+                            Text(
+                              'Due date',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      children: const [
+                        Icon(Icons.note_outlined),
+                        SizedBox(width: 10),
+                        Text(
+                          'Description',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const Spacer(),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                width: MediaQuery.of(context).size.width * 0.8,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 30,
+                      ),
+                      backgroundColor: kPrimaryColor,
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                  onPressed: () {},
+                  child: const Text(
+                    'Cancel Appointment',
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
               ),

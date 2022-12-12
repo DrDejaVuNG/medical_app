@@ -1,8 +1,6 @@
 import 'form.dart';
-import 'package:medical_app/frontend/views/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
-import 'package:medical_app/frontend/utils/account_check_nav.dart';
 import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
@@ -19,6 +17,7 @@ class Body extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset('assets/images/signup.jpg'),
+            const SizedBox(height: 5),
             const FormWidget(),
             Padding(
               padding: const EdgeInsets.only(
@@ -67,16 +66,6 @@ class Body extends StatelessWidget {
               text: 'Continue',
               width: MediaQuery.of(context).size.width * 0.8,
               action: () {},
-            ),
-            AccountCheckNav(
-              firstText: 'Joined us before?',
-              secondText: 'Login',
-              action: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginView()),
-                );
-              },
             ),
           ],
         ),

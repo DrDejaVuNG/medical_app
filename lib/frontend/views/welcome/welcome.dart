@@ -8,7 +8,7 @@ class WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: SafeArea(child: Body()),
+      body: SafeArea(child: Center(child: Body())),
     );
   }
 }

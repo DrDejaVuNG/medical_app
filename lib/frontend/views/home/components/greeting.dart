@@ -7,12 +7,13 @@ class Greeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'Good Morning, Paul',
-      maxLines: 2,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 25,
+    return const Expanded(
+      child: Text(
+        'Good Morning, Paul',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),
       ),
     );
   }
