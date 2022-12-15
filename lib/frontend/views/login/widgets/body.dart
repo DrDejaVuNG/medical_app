@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:medical_app/config/constants.dart';
-import 'package:medical_app/frontend/utils/rounded_button.dart';
-import 'package:medical_app/frontend/views/home/home.dart';
 import '../../sign_up/sign_up.dart';
-import '../../login/components/form.dart';
+import 'package:flutter/material.dart';
+import '../../login/widgets/form.dart';
 import '../../../utils/account_check_nav.dart';
+import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/frontend/utils/bottom_nav.dart';
+import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
@@ -39,7 +39,7 @@ class Body extends StatelessWidget {
               action: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeView()),
+                  MaterialPageRoute(builder: (context) => const BottomNav()),
                 );
               },
             ),

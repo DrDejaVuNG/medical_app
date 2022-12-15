@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'components/body.dart';
+import 'widgets/body.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);

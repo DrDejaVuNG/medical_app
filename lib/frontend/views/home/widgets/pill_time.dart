@@ -8,7 +8,7 @@ class PillTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Before lunch',
+      'Per Day',
       style: TextStyle(
         color: Colors.grey,
         fontWeight: FontWeight.bold,

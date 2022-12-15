@@ -1,10 +1,11 @@
+import 'widgets/date.dart';
+import 'widgets/greeting.dart';
+import 'widgets/pill_time.dart';
+import 'widgets/pill_slider.dart';
+import 'widgets/health_card.dart';
 import 'package:flutter/material.dart';
-import 'components/date.dart';
-import 'components/greeting.dart';
-import 'components/pill_time.dart';
-import 'components/pill_slider.dart';
-import 'components/appointment_card.dart';
-import 'components/appointment_count.dart';
+import 'widgets/appointment_card.dart';
+import 'widgets/appointment_count.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/frontend/views/schedule/schedule.dart';
 
@@ -32,24 +33,42 @@ class HomeView extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(width: 0.5, color: Colors.grey),
+                        border: Border.all(width: 3, color: kPrimaryColor),
                       ),
-                      child: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        splashRadius: 25,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ScheduleView()),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.calendar_month_outlined,
-                          size: 22,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(width: 2, color: Colors.transparent),
+                        ),
+                        child: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage:
+                              AssetImage('assets/images/doctor_img.jpg'),
                         ),
                       ),
                     ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //     border: Border.all(width: 0.5, color: Colors.grey),
+                    //   ),
+                    //   child: IconButton(
+                    //     padding: const EdgeInsets.all(0),
+                    //     splashRadius: 25,
+                    //     onPressed: () {
+                    //       Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => const ScheduleView()),
+                    //       );
+                    //     },
+                    //     icon: const Icon(
+                    //       Icons.calendar_month_outlined,
+                    //       size: 22,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -57,6 +76,7 @@ class HomeView extends StatelessWidget {
               const AppointmentCount(),
               const SizedBox(height: 30),
               const AppointmentCard(),
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
@@ -100,6 +120,7 @@ class HomeView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const PillSlider(),
+              const HealthCard(),
             ],
           ),
         ),

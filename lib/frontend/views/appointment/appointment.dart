@@ -15,11 +15,7 @@ class AppointView extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    splashRadius: 30,
-                    icon: const Icon(Icons.arrow_back_rounded),
-                  ),
+                  const BackButton(),
                   const Text(
                     'Appointment Details',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -27,7 +23,7 @@ class AppointView extends StatelessWidget {
                   IconButton(
                     onPressed: () {},
                     splashRadius: 30,
-                    icon: const Icon(Icons.menu_rounded),
+                    icon: const Icon(Icons.more_vert_rounded),
                   ),
                 ],
               ),

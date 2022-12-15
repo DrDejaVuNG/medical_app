@@ -1,4 +1,3 @@
-import 'package:medical_app/config/constants.dart';
 import 'package:flutter/material.dart';
 import 'frontend/views/welcome/welcome.dart';
 
@@ -13,7 +12,6 @@ class MyApp extends StatelessWidget {
       title: 'Lasu Medical',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
       home: const WelcomeView(),

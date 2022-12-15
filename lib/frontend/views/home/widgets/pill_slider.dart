@@ -10,7 +10,7 @@ class PillSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 218,
       child: Padding(
         padding: const EdgeInsets.only(left: 20),
         child: ListView.builder(
@@ -20,8 +20,7 @@ class PillSlider extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Container(
-                height: 100,
-                width: 145,
+                width: 150,
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
                   borderRadius: BorderRadius.circular(25),
@@ -39,13 +38,21 @@ class PillSlider extends StatelessWidget {
                       Text(
                         'Aspirin',
                         style: TextStyle(
-                          fontSize: 17,
-                          letterSpacing: 0.8,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 17,
+                            letterSpacing: 0.8,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                       SizedBox(height: 5),
-                      Text('1 pill, 25 mg.'),
+                      Text(
+                        '1 Pill, 25 Mg.',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        '10:00 PM',
+                        style: TextStyle(color: Colors.white),
+                      ),
                       SizedBox(height: 20),
                       PillButton(),
                     ],
