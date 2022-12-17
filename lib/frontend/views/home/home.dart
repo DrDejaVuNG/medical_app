@@ -6,8 +6,8 @@ import 'widgets/health_card.dart';
 import 'package:flutter/material.dart';
 import 'widgets/appointment_card.dart';
 import 'widgets/appointment_count.dart';
+import '../schedule/schedule_view.dart';
 import 'package:medical_app/config/constants.dart';
-import 'package:medical_app/frontend/views/schedule/schedule.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -48,27 +48,6 @@ class HomeView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //     border: Border.all(width: 0.5, color: Colors.grey),
-                    //   ),
-                    //   child: IconButton(
-                    //     padding: const EdgeInsets.all(0),
-                    //     splashRadius: 25,
-                    //     onPressed: () {
-                    //       Navigator.push(
-                    //         context,
-                    //         MaterialPageRoute(
-                    //             builder: (context) => const ScheduleView()),
-                    //       );
-                    //     },
-                    //     icon: const Icon(
-                    //       Icons.calendar_month_outlined,
-                    //       size: 22,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

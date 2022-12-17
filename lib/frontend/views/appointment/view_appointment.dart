@@ -23,17 +23,14 @@ class AppointView extends StatelessWidget {
                   IconButton(
                     onPressed: () {},
                     splashRadius: 30,
-                    icon: const Icon(Icons.more_vert_rounded),
+                    icon: const Icon(Icons.edit_outlined),
                   ),
                 ],
               ),
               const SizedBox(height: 40),
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Image.asset('assets/images/doctor_img.jpg'),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Image.asset('assets/images/doctor_img.jpg', scale: 6),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -45,7 +42,7 @@ class AppointView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                'General & Internal Medicine',
+                'Dentist',
                 style: TextStyle(),
               ),
               const SizedBox(height: 20),
@@ -86,6 +83,7 @@ class AppointView extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        const SizedBox(width: 2),
                         Container(
                           height: 20,
                           width: 20,
@@ -96,7 +94,7 @@ class AppointView extends StatelessWidget {
                         ),
                         const SizedBox(width: 10),
                         const Text(
-                          'Headaches',
+                          'Medicine Prescription',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -134,10 +132,10 @@ class AppointView extends StatelessWidget {
                     const SizedBox(height: 25),
                     Row(
                       children: const [
-                        Icon(Icons.note_outlined),
+                        Icon(Icons.schedule),
                         SizedBox(width: 10),
                         Text(
-                          'Description',
+                          '09:00 - 09:30',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -148,33 +146,64 @@ class AppointView extends StatelessWidget {
                   ],
                 ),
               ),
-              const Spacer(),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                width: MediaQuery.of(context).size.width * 0.8,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 30,
-                      ),
-                      backgroundColor: kPrimaryColor,
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15))),
-                  onPressed: () {},
-                  child: const Text(
-                    'Cancel Appointment',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
+      ),
+      bottomSheet: BottomSheet(
+        onClosing: () {},
+        elevation: 5,
+        builder: (context) {
+          return SizedBox(
+            height: 50,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              color: kPrimaryColor,
+              child: Row(
+                children: [
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.cancel_outlined,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Cancel',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  GestureDetector(
+                    onTap: () {},
+                    child: Row(
+                      children: const [
+                        Icon(
+                          Icons.check_circle_outline,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Done',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

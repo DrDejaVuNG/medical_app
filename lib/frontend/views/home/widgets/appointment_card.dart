@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../appointment/appointment.dart';
+import '../../appointment/view_appointment.dart';
 import 'package:medical_app/config/constants.dart';
 
 class AppointmentCard extends StatelessWidget {

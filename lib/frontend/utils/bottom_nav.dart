@@ -4,7 +4,7 @@ import 'package:medical_app/config/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medical_app/frontend/views/profile/profile.dart';
-import 'package:medical_app/frontend/views/schedule/schedule.dart';
+import 'package:medical_app/frontend/views/schedule/schedule_view.dart';
 import 'package:medical_app/frontend/views/notififications/notifications.dart';
 
 class BottomNav extends StatefulWidget {
@@ -54,21 +54,25 @@ class _BottomNavState extends State<BottomNav> {
             padding: const EdgeInsets.all(6),
             tabBackgroundColor: Colors.grey.shade800,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            tabs: const [
+            tabs: [
               GButton(
-                icon: Icons.home_outlined,
+                icon: index == 0 ? Icons.home : Icons.home_outlined,
                 text: 'Home',
               ),
               GButton(
-                icon: Icons.calendar_month_outlined,
+                icon: index == 1
+                    ? Icons.calendar_month
+                    : Icons.calendar_month_outlined,
                 text: 'Schedule',
               ),
               GButton(
-                icon: FontAwesomeIcons.bell,
+                icon: index == 2
+                    ? FontAwesomeIcons.solidBell
+                    : FontAwesomeIcons.bell,
                 text: 'Notifications',
               ),
               GButton(
-                icon: Icons.person_outline_rounded,
+                icon: index == 3 ? Icons.person : Icons.person_outline_rounded,
                 iconSize: 26,
                 text: 'Profile',
               ),
