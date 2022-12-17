@@ -42,7 +42,7 @@ class AppointView extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Text(
-                'Dentist',
+                'General & Internal Medicine',
                 style: TextStyle(),
               ),
               const SizedBox(height: 20),
@@ -155,9 +155,9 @@ class AppointView extends StatelessWidget {
         elevation: 5,
         builder: (context) {
           return SizedBox(
-            height: 50,
+            height: 55,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               color: kPrimaryColor,
               child: Row(
                 children: [
@@ -180,7 +180,7 @@ class AppointView extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 25),
                   GestureDetector(
                     onTap: () {},
                     child: Row(

@@ -1,5 +1,6 @@
 import 'widgets/schedule.dart';
 import 'package:flutter/material.dart';
+import '../appointment/new_appointment.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -69,7 +70,14 @@ class _ScheduleViewState extends State<ScheduleView> {
                       ),
                       const SizedBox(width: 15),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AppointNew(),
+                            ),
+                          );
+                        },
                         child: const Icon(Icons.add),
                       ),
                     ],
@@ -85,14 +93,14 @@ class _ScheduleViewState extends State<ScheduleView> {
                   titleCentered: true,
                   formatButtonVisible: false,
                 ),
-                calendarStyle: CalendarStyle(
+                calendarStyle: const CalendarStyle(
                   todayDecoration: BoxDecoration(
                     color: kLightColor,
-                    borderRadius: BorderRadius.circular(15),
+                    shape: BoxShape.circle,
                   ),
                   selectedDecoration: BoxDecoration(
                     color: kPrimaryColor,
-                    borderRadius: BorderRadius.circular(15),
+                    shape: BoxShape.circle,
                   ),
                 ),
                 selectedDayPredicate: (day) => isSameDay(day, today),
@@ -114,13 +122,6 @@ class _ScheduleViewState extends State<ScheduleView> {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {},
-      //   backgroundColor: Colors.black,
-      //   tooltip: 'New Appointment',
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
