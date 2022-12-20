@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
 
+import 'notification.dart';
+
 class NotifyView extends StatelessWidget {
   const NotifyView({super.key});
 
@@ -9,6 +11,7 @@ class NotifyView extends StatelessWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               decoration: const BoxDecoration(
@@ -47,29 +50,16 @@ class NotifyView extends StatelessWidget {
                 ),
               ),
             ),
-            // ListView.builder(
-            //   itemCount: 5,
-            //   itemBuilder: (context, index) {
-            //     return Container(
-            //       decoration: const BoxDecoration(
-            //         border: Border(bottom: BorderSide(color: kPrimaryColor)),
-            //       ),
-            //       child: SizedBox(
-            //         height: 65,
-            //         child: Padding(
-            //           padding: const EdgeInsets.all(20),
-            //           child: Column(
-            //             children: const [
-            //               Text('Notification'),
-            //               SizedBox(height: 5),
-            //               Text('This is a notification'),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            //     );
-            //   },
-            // ),
+            Flexible(
+              child: ListView.builder(
+                itemCount: 10,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return const NotificationCard();
+                },
+              ),
+            ),
           ],
         ),
       ),

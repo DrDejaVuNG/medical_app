@@ -8,6 +8,9 @@ class Date extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime day = DateTime.now();
+    DateTime month = DateTime.now();
+
     return const Text(
       'Today, 6 December',
       style: TextStyle(

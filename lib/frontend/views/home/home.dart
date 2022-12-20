@@ -1,7 +1,6 @@
 import 'widgets/date.dart';
 import 'widgets/greeting.dart';
-import 'widgets/pill_time.dart';
-import 'widgets/pill_slider.dart';
+import 'widgets/pill_card.dart';
 import 'widgets/health_card.dart';
 import 'package:flutter/material.dart';
 import 'widgets/appointment_card.dart';
@@ -93,12 +92,27 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 5),
-                    PillTime(),
+                    Text(
+                      'Per Day',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const PillSlider(),
+              SizedBox(
+                height: 218,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return const PillCard();
+                  },
+                ),
+              ),
               const HealthCard(),
             ],
           ),

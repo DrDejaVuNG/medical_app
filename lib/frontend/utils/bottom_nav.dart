@@ -5,7 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medical_app/frontend/views/profile/profile.dart';
 import 'package:medical_app/frontend/views/schedule/schedule_view.dart';
-import 'package:medical_app/frontend/views/notififications/notifications.dart';
+import 'package:medical_app/frontend/views/notififications/notifications_view.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({
@@ -41,15 +41,15 @@ class _BottomNavState extends State<BottomNav> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: GNav(
-            gap: 8,
-            color: Colors.white,
-            activeColor: Colors.white,
-            selectedIndex: index,
             onTabChange: (value) {
               setState(() {
                 index = value;
               });
             },
+            gap: 8,
+            selectedIndex: index,
+            color: Colors.white,
+            activeColor: Colors.white,
             backgroundColor: Colors.black,
             padding: const EdgeInsets.all(6),
             tabBackgroundColor: Colors.grey.shade800,
