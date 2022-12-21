@@ -12,6 +12,7 @@ class AppointNew extends StatefulWidget {
 }
 
 class _AppointNewState extends State<AppointNew> {
+  String? initialValue;
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   DateTime? trueDate;
@@ -106,6 +107,7 @@ class _AppointNewState extends State<AppointNew> {
                 ),
                 padding: const EdgeInsets.only(left: 45),
                 child: TextFormField(
+                  initialValue: initialValue,
                   style: const TextStyle(fontSize: 22),
                   decoration: const InputDecoration(
                     hintText: 'Add a title',

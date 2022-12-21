@@ -44,7 +44,10 @@ class _ScheduleViewState extends State<ScheduleView> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
+                  ),
                   child: Row(
                     children: [
                       const CircleAvatar(

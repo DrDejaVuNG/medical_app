@@ -24,7 +24,10 @@ class NotifyView extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 15,
+                ),
                 child: Row(
                   children: [
                     const CircleAvatar(
@@ -52,7 +55,7 @@ class NotifyView extends StatelessWidget {
             ),
             Flexible(
               child: ListView.builder(
-                itemCount: 10,
+                itemCount: 15,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
