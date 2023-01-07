@@ -1,10 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:medical_app/models/appointment_model.dart';
 import '../appointment/new_appointment.dart';
 import '../../../databases/appointment_db.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:medical_app/models/appointment_model.dart';
 import 'package:medical_app/frontend/views/schedule/widgets/schedule.dart';
 
 class ScheduleView extends StatefulWidget {
@@ -17,24 +17,30 @@ class ScheduleView extends StatefulWidget {
 class _ScheduleViewState extends State<ScheduleView> {
   CalendarFormat calendarFormat = CalendarFormat.week;
   DateTime today = DateTime.now();
-  List<AppointmentModel> displayList = [];
 
   @override
   void initState() {
     super.initState();
     final date = DateFormat('EEEE, MMMM d, y').format(today);
+    if (box.get("APPOINTMENTLIST") == null) {
+      appointmentList.add(
+        AppointmentModel(
+          title: 'New appointment',
+          time: 'Any time',
+          date: date,
+          intColor: 0xff33691e,
+        ),
+      );
+    } else {
+      loadData();
+    }
+
     for (var appointment in appointmentList) {
       if (appointment.date == date) {
         displayList.add(appointment);
       }
     }
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   db.loadData();
-  // }
 
   void onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {

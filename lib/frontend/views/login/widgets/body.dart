@@ -13,8 +13,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final email = '';
-  final password = '';
+  final email = TextEditingController();
+  final password = TextEditingController();
 
   bool obscureText = true;
 
@@ -32,8 +32,8 @@ class _BodyState extends State<Body> {
     // login
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: 'test@gmail.com',
-        password: 'test123',
+        email: email.text,
+        password: password.text,
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -79,12 +79,18 @@ class _BodyState extends State<Body> {
                     height: size.height * 0.07,
                     width: size.width * 0.9,
                     child: TextFormField(
+                      controller: email,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.alternate_email),
                         hintText: 'Email ID',
                       ),
-                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Email';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -92,6 +98,7 @@ class _BodyState extends State<Body> {
                     height: size.height * 0.07,
                     width: size.width * 0.9,
                     child: TextFormField(
+                      controller: password,
                       obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
                       decoration: InputDecoration(
@@ -105,6 +112,12 @@ class _BodyState extends State<Body> {
                               : Icons.visibility_off),
                         ),
                       ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Password';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],

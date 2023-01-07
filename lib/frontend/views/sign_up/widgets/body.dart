@@ -1,17 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
-  const Body({
+  Body({
     Key? key,
   }) : super(key: key);
 
-  void signUserUp() {
-    // final name;
-    // final email;
-    // final mobile;
-    // final password;
+  final name = TextEditingController();
+  final email = TextEditingController();
+  final mobile = TextEditingController();
+  final password = TextEditingController();
+
+  void signUserUp() async {
+    // sign up
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email.text,
+        password: password.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use') {
+        // print('Email is already in use');
+      } else if (e.code == 'weak-password') {
+        // print('Weak Password');
+      }
+    }
   }
 
   @override
@@ -47,12 +62,18 @@ class Body extends StatelessWidget {
                     height: size.height * 0.07,
                     width: size.width * 0.9,
                     child: TextFormField(
+                      controller: email,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.alternate_email),
                         hintText: 'Email ID',
                       ),
-                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Email';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -60,12 +81,18 @@ class Body extends StatelessWidget {
                     height: size.height * 0.07,
                     width: size.width * 0.9,
                     child: TextFormField(
+                      controller: name,
                       keyboardType: TextInputType.name,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.person_outline),
                         hintText: 'Full Name',
                       ),
-                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Full Name';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -73,12 +100,18 @@ class Body extends StatelessWidget {
                     height: size.height * 0.07,
                     width: size.width * 0.9,
                     child: TextFormField(
+                      controller: mobile,
                       keyboardType: TextInputType.phone,
                       decoration: const InputDecoration(
                         icon: Icon(Icons.phone_iphone_outlined),
                         hintText: 'Mobile',
                       ),
-                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Mobile';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   Container(
@@ -99,6 +132,12 @@ class Body extends StatelessWidget {
                               : Icons.visibility_off),
                         ),
                       ),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Enter Password';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                 ],
@@ -150,7 +189,7 @@ class Body extends StatelessWidget {
             RoundedButton(
               text: 'Continue',
               width: MediaQuery.of(context).size.width * 0.8,
-              action: () {},
+              action: signUserUp,
             ),
           ],
         ),

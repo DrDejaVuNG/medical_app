@@ -20,7 +20,7 @@ class AppointmentAdapter extends TypeAdapter<AppointmentModel> {
       title: fields[1] as String,
       time: fields[2] as String,
       date: fields[3] as String,
-      selectedColor: fields[4] as Color,
+      intColor: fields[4] as int,
     );
   }
 
@@ -37,7 +37,7 @@ class AppointmentAdapter extends TypeAdapter<AppointmentModel> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.selectedColor);
+      ..write(obj.intColor);
   }
 
   @override

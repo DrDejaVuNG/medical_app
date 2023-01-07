@@ -9,16 +9,17 @@ class Schedule extends StatelessWidget {
     required this.title,
     required this.time,
     required this.date,
-    required this.color,
+    required this.intColor,
   }) : super(key: key);
 
   final String title;
   final String time;
   final String date;
-  final Color color;
+  final int intColor;
 
   @override
   Widget build(BuildContext context) {
+    Color color = Color(intColor);
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Row(
@@ -134,6 +135,6 @@ class ScheduleItem extends Schedule {
           title: item.title,
           time: item.time,
           date: item.date,
-          color: item.selectedColor,
+          intColor: item.intColor,
         );
 }

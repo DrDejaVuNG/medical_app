@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:uuid/uuid.dart';
 
@@ -12,7 +11,7 @@ class AppointmentModel {
     required this.title,
     required this.time,
     required this.date,
-    required this.selectedColor,
+    required this.intColor,
   });
 
   @HiveField(0)
@@ -32,5 +31,5 @@ class AppointmentModel {
 
 
   @HiveField(4)
-  final Color selectedColor;
+  final int intColor;
 }

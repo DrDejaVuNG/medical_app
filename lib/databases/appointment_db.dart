@@ -1,39 +1,19 @@
-import 'package:flutter/material.dart';
 import '../models/appointment_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-  final _myBox = Hive.box('mybox');
-List<AppointmentModel> appointmentList = [
-  AppointmentModel(
-    title: 'New appointment',
-    time: 'Any time',
-    date: 'Thursday, January 5, 2023',
-    selectedColor: Colors.black,
-  ),
-];
+List<AppointmentModel> appointmentList = [];
 
-class AppointmentDB {
-  // reference our box
+List<AppointmentModel> displayList = [];
 
-  // run this method if this is the 1st time ever opening this app
-  void createInitialData() {
-    appointmentList = [
-      AppointmentModel(
-        title: 'New appointment',
-        time: 'Any time',
-        date: 'Any Date',
-        selectedColor: Colors.black,
-      ),
-    ];
-  }
+// reference our box
+var box = Hive.box('mybox');
 
-  // load the data from database
-  void loadData() {
-    appointmentList = _myBox.get("APPOINTMENTLIST");
-  }
+// load the data from database
+void loadData() {
+  appointmentList = box.get("APPOINTMENTLIST");
+}
 
-  // update the database
-  Future<void> updateDataBase() async {
-    await _myBox.put("APPOINTMENTLIST", appointmentList);
-  }
+// update the database
+void updateDataBase() {
+  box.put("APPOINTMENTLIST", appointmentList);
 }

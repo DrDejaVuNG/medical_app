@@ -63,7 +63,7 @@ class HomeView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const AppointmentCount(),
+              AppointmentCount(),
               const SizedBox(height: 30),
               const AppointmentCard(),
               const SizedBox(height: 20),

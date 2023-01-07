@@ -20,8 +20,7 @@ class _AppointNewState extends State<AppointNew> {
   String? trueDate;
   String? trueTime;
   String? title;
-
-  Color selectedColor = kPrimaryColor;
+  Color selectedColor = const Color(0xff33691e);
 
   // change color
   onColorChange(color) {
@@ -70,13 +69,13 @@ class _AppointNewState extends State<AppointNew> {
       title: title.toString(),
       time: trueTime.toString(),
       date: trueDate.toString(),
-      selectedColor: selectedColor,
+      intColor: selectedColor.value,
     );
     setState(() {
       appointmentList.add(appointment);
     });
+    db.updateDataBase();
     Navigator.of(context).pop();
-    // db.updateDataBase();
   }
 
   @override
