@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
+
+  void logUserOut() async {
+    FirebaseAuth.instance.signOut;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +28,22 @@ class ProfileView extends StatelessWidget {
                       ),
                     ),
                     const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border(
-                          top: BorderSide(color: kPrimaryColor, width: 1.5),
-                          bottom: BorderSide(color: kPrimaryColor, width: 1.5),
-                          left: BorderSide(color: kPrimaryColor, width: 1.5),
-                          right: BorderSide(color: kPrimaryColor, width: 1.5),
+                    GestureDetector(
+                      onTap: logUserOut,
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border(
+                            top: BorderSide(color: kPrimaryColor, width: 1.5),
+                            bottom:
+                                BorderSide(color: kPrimaryColor, width: 1.5),
+                            left: BorderSide(color: kPrimaryColor, width: 1.5),
+                            right: BorderSide(color: kPrimaryColor, width: 1.5),
+                          ),
                         ),
+                        child: const Icon(Icons.settings_outlined),
                       ),
-                      child: const Icon(Icons.settings_outlined),
                     ),
                   ],
                 ),

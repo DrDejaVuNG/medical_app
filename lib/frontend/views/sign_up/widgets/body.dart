@@ -1,21 +1,27 @@
-import '../../../utils/password_input.dart';
-import '../../../utils/text_input.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
-  Body({
+  const Body({
     Key? key,
   }) : super(key: key);
 
-  final name = TextEditingController();
-  final email = TextEditingController();
-  final mobile = TextEditingController();
-  final password = TextEditingController();
+  void signUserUp() {
+    // final name;
+    // final email;
+    // final mobile;
+    // final password;
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool obscureText = true;
+    void toggle() {
+      obscureText = !obscureText;
+    }
+
+    Size size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -36,25 +42,65 @@ class Body extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextInput(
-                    text: 'Email ID',
-                    icon: const Icon(Icons.alternate_email),
-                    inputType: TextInputType.emailAddress,
-                    controller: email,
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    height: size.height * 0.07,
+                    width: size.width * 0.9,
+                    child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.alternate_email),
+                        hintText: 'Email ID',
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
-                  TextInput(
-                    text: 'Full Name',
-                    icon: const Icon(Icons.person_outline),
-                    inputType: TextInputType.name,
-                    controller: name,
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    height: size.height * 0.07,
+                    width: size.width * 0.9,
+                    child: TextFormField(
+                      keyboardType: TextInputType.name,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.person_outline),
+                        hintText: 'Full Name',
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
-                  TextInput(
-                    text: 'Mobile',
-                    icon: const Icon(Icons.phone_iphone_outlined),
-                    inputType: TextInputType.phone,
-                    controller: mobile,
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    height: size.height * 0.07,
+                    width: size.width * 0.9,
+                    child: TextFormField(
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        icon: Icon(Icons.phone_iphone_outlined),
+                        hintText: 'Mobile',
+                      ),
+                      onChanged: (value) {},
+                    ),
                   ),
-                  PasswordInput(controller: password),
+                  Container(
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    height: size.height * 0.07,
+                    width: size.width * 0.9,
+                    child: TextFormField(
+                      obscureText: true,
+                      keyboardType: TextInputType.visiblePassword,
+                      decoration: InputDecoration(
+                        icon: const Icon(Icons.lock_outlined),
+                        hintText: 'Password',
+                        suffixIcon: IconButton(
+                          splashRadius: 1,
+                          onPressed: toggle,
+                          icon: Icon(obscureText
+                              ? Icons.visibility_sharp
+                              : Icons.visibility_off),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

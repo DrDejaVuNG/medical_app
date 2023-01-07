@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/providers/input_state.dart';
+import 'package:provider/provider.dart';
 
 class PasswordInput extends StatelessWidget {
   const PasswordInput({
     Key? key,
-    required this.controller,
+    required this.type,
   }) : super(key: key);
 
-  final TextEditingController controller;
-
+  final String type;
   // void toggle() {
   //   obscureText = !obscureText;
   // }
@@ -15,13 +16,13 @@ class PasswordInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final state = Provider.of<InputState>(context);
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       height: size.height * 0.07,
       width: size.width * 0.9,
       child: TextFormField(
-        controller: controller,
         obscureText: true,
         keyboardType: TextInputType.visiblePassword,
         decoration: const InputDecoration(
@@ -34,6 +35,7 @@ class PasswordInput extends StatelessWidget {
           //       obscureText ? Icons.visibility_sharp : Icons.visibility_off),
           // ),
         ),
+        onChanged: (value) => state.setValue(value, type),
       ),
     );
   }
