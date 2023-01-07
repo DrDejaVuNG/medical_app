@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../appointment/view_appointment.dart';
 import 'package:medical_app/config/constants.dart';
 
 class AppointmentCard extends StatelessWidget {
@@ -13,10 +12,10 @@ class AppointmentCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: GestureDetector(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AppointView()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const AppointView()),
+          // );
         },
         child: Container(
           width: MediaQuery.of(context).size.width,

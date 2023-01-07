@@ -9,6 +9,10 @@ import 'package:medical_app/frontend/utils/rounded_button.dart';
 class Body extends StatelessWidget {
   const Body({Key? key}) : super(key: key);
 
+  void logUserIn() {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

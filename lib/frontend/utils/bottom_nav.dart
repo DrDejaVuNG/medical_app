@@ -1,3 +1,5 @@
+import 'package:provider/provider.dart';
+import '../../providers/page_state.dart';
 import '../views/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
@@ -7,27 +9,20 @@ import 'package:medical_app/frontend/views/profile/profile.dart';
 import 'package:medical_app/frontend/views/schedule/schedule_view.dart';
 import 'package:medical_app/frontend/views/notififications/notifications_view.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({
-    Key? key,
-  }) : super(key: key);
+class BottomNav extends StatelessWidget {
+  const BottomNav({super.key});
 
-  @override
-  State<BottomNav> createState() => _BottomNavState();
-}
-
-class _BottomNavState extends State<BottomNav> {
-  int index = 0;
-  final views = [
-    const HomeView(),
-    const ScheduleView(),
-    const NotifyView(),
-    const ProfileView(),
-  ];
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<PageState>(context);
+    int index = state.index;
     return Scaffold(
-      body: views[index],
+      body: [
+        const HomeView(),
+        const ScheduleView(),
+        const NotifyView(),
+        const ProfileView(),
+      ].elementAt(index),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
           color: Colors.black,
@@ -42,9 +37,7 @@ class _BottomNavState extends State<BottomNav> {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: GNav(
             onTabChange: (value) {
-              setState(() {
-                index = value;
-              });
+              state.setCurrentIndex(value);
             },
             gap: 8,
             selectedIndex: index,

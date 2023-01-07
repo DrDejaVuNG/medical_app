@@ -3,21 +3,21 @@ import 'package:intl/intl.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:o_color_picker/o_color_picker.dart';
 import 'package:o_popup/o_popup.dart';
+import 'package:provider/provider.dart';
+import '../../../providers/appointment_state.dart';
 
-class AppointNew extends StatefulWidget {
-  const AppointNew({super.key});
+class AppointEdit extends StatefulWidget {
+  const AppointEdit({super.key});
 
   @override
-  State<AppointNew> createState() => _AppointNewState();
+  State<AppointEdit> createState() => _AppointEditState();
 }
 
-class _AppointNewState extends State<AppointNew> {
-  String? initialValue;
+class _AppointEditState extends State<AppointEdit> {
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   DateTime? trueDate;
   TimeOfDay? trueTime;
-
   Color selectedColor = kPrimaryColor;
 
   onColorChange(color) {
@@ -57,6 +57,13 @@ class _AppointNewState extends State<AppointNew> {
 
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<AppointmentState>(context);
+    String title = state.title;
+
+    String initialTime = state.time;
+    String initialDate = state.date;
+    Color initialColor =
+        selectedColor == kPrimaryColor ? state.color : selectedColor;
     final local = MaterialLocalizations.of(context);
     final timeFormat = local.formatTimeOfDay(time);
     final dateFormat = DateFormat('EEEE, MMMM d, y').format(date);
@@ -76,6 +83,14 @@ class _AppointNewState extends State<AppointNew> {
                   const Spacer(),
                   GestureDetector(
                     onTap: () {
+                      state.onEdit(
+                        title,
+                        timeFormat,
+                        dateFormat,
+                        initialColor,
+                        trueTime,
+                        trueDate,
+                      );
                       Navigator.pop(context);
                     },
                     child: Container(
@@ -88,7 +103,7 @@ class _AppointNewState extends State<AppointNew> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       child: const Text(
-                        'Add',
+                        'Edit',
                         style: TextStyle(
                           fontSize: 15,
                           color: Colors.white,
@@ -107,12 +122,13 @@ class _AppointNewState extends State<AppointNew> {
                 ),
                 padding: const EdgeInsets.only(left: 45),
                 child: TextFormField(
-                  initialValue: initialValue,
+                  initialValue: title,
                   style: const TextStyle(fontSize: 22),
                   decoration: const InputDecoration(
                     hintText: 'Add a title',
                     border: InputBorder.none,
                   ),
+                  onChanged: (value) => title = value,
                 ),
               ),
               const SizedBox(height: 10),
@@ -133,7 +149,7 @@ class _AppointNewState extends State<AppointNew> {
                         height: 20,
                         width: 20,
                         decoration: BoxDecoration(
-                          color: selectedColor,
+                          color: initialColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -175,7 +191,7 @@ class _AppointNewState extends State<AppointNew> {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        trueTime == null ? 'Pick a time' : timeFormat,
+                        trueTime == null ? initialTime : timeFormat,
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
@@ -200,7 +216,7 @@ class _AppointNewState extends State<AppointNew> {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        trueDate == null ? 'Pick a date' : dateFormat,
+                        trueDate == null ? initialDate : dateFormat,
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],

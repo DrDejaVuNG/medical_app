@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/databases/appointment_db.dart';
+import 'package:medical_app/models/appointment_model.dart';
 import 'package:o_color_picker/o_color_picker.dart';
 import 'package:o_popup/o_popup.dart';
 
 class AppointNew extends StatefulWidget {
   const AppointNew({super.key});
-
   @override
   State<AppointNew> createState() => _AppointNewState();
 }
 
 class _AppointNewState extends State<AppointNew> {
+  AppointmentDB db = AppointmentDB();
+
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
-  DateTime? trueDate;
-  TimeOfDay? trueTime;
+  String? trueDate;
+  String? trueTime;
+  String? title;
 
   Color selectedColor = kPrimaryColor;
 
+  // change color
   onColorChange(color) {
     setState(() {
       selectedColor = color;
@@ -26,6 +31,7 @@ class _AppointNewState extends State<AppointNew> {
     Navigator.pop(context);
   }
 
+  // change time
   timeSelection(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -34,11 +40,14 @@ class _AppointNewState extends State<AppointNew> {
     if (picked != null && picked != TimeOfDay.now()) {
       setState(() {
         time = picked;
-        trueTime = picked;
+        final local = MaterialLocalizations.of(context);
+        final timeFormat = local.formatTimeOfDay(time);
+        trueTime = timeFormat;
       });
     }
   }
 
+  // change date
   dateSelection(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -49,16 +58,29 @@ class _AppointNewState extends State<AppointNew> {
     if (picked != null && picked != DateTime.now()) {
       setState(() {
         date = picked;
-        trueDate = picked;
+        final dateFormat = DateFormat('EEEE, MMMM d, y').format(date);
+        trueDate = dateFormat;
       });
     }
   }
 
+  // save new appointment
+  void saveNewTask() {
+    AppointmentModel appointment = AppointmentModel(
+      title: title.toString(),
+      time: trueTime.toString(),
+      date: trueDate.toString(),
+      selectedColor: selectedColor,
+    );
+    setState(() {
+      appointmentList.add(appointment);
+    });
+    Navigator.of(context).pop();
+    // db.updateDataBase();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final local = MaterialLocalizations.of(context);
-    final timeFormat = local.formatTimeOfDay(time);
-    final dateFormat = DateFormat('EEEE, MMMM d, y').format(date);
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -74,9 +96,7 @@ class _AppointNewState extends State<AppointNew> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
+                    onTap: () => saveNewTask(),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
@@ -111,6 +131,13 @@ class _AppointNewState extends State<AppointNew> {
                     hintText: 'Add a title',
                     border: InputBorder.none,
                   ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Add a title';
+                    }
+                    return null;
+                  },
+                  onChanged: (value) => title = value,
                 ),
               ),
               const SizedBox(height: 10),
@@ -173,7 +200,7 @@ class _AppointNewState extends State<AppointNew> {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        trueTime == null ? 'Pick a time' : timeFormat,
+                        trueTime == null ? 'Pick a time' : trueTime.toString(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],
@@ -198,7 +225,7 @@ class _AppointNewState extends State<AppointNew> {
                       ),
                       const SizedBox(width: 20),
                       Text(
-                        trueDate == null ? 'Pick a date' : dateFormat,
+                        trueDate == null ? 'Pick a date' : trueDate.toString(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ],

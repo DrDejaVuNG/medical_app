@@ -1,8 +1,11 @@
-import 'widgets/schedule.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:medical_app/models/appointment_model.dart';
 import '../appointment/new_appointment.dart';
+import '../../../databases/appointment_db.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:medical_app/frontend/views/schedule/widgets/schedule.dart';
 
 class ScheduleView extends StatefulWidget {
   const ScheduleView({super.key});
@@ -14,15 +17,48 @@ class ScheduleView extends StatefulWidget {
 class _ScheduleViewState extends State<ScheduleView> {
   CalendarFormat calendarFormat = CalendarFormat.week;
   DateTime today = DateTime.now();
+  List<AppointmentModel> displayList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    final date = DateFormat('EEEE, MMMM d, y').format(today);
+    for (var appointment in appointmentList) {
+      if (appointment.date == date) {
+        displayList.add(appointment);
+      }
+    }
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   db.loadData();
+  // }
+
   void onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
+      displayList.clear();
+      final date = DateFormat('EEEE, MMMM d, y').format(day);
+      for (var appointment in appointmentList) {
+        if (appointment.date == date) {
+          displayList.add(appointment);
+        }
+      }
     });
   }
 
   void resetCalendar() {
     setState(() {
       today = DateTime.now();
+      displayList.clear();
+      final date = DateFormat('EEEE, MMMM d, y').format(today);
+      for (var appointment in appointmentList) {
+        if (appointment.date == date) {
+          displayList.add(appointment);
+        }
+      }
     });
   }
 
@@ -31,8 +67,10 @@ class _ScheduleViewState extends State<ScheduleView> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          physics: const ScrollPhysics(),
           child: Column(
             children: [
+              // topbar
               Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -44,10 +82,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 15,
-                  ),
+                  padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
                       const CircleAvatar(
@@ -79,7 +114,16 @@ class _ScheduleViewState extends State<ScheduleView> {
                             MaterialPageRoute(
                               builder: (context) => const AppointNew(),
                             ),
-                          );
+                          ).then((value) => setState(() {
+                                displayList.clear();
+                                final date =
+                                    DateFormat('EEEE, MMMM d, y').format(today);
+                                for (var appointment in appointmentList) {
+                                  if (appointment.date == date) {
+                                    displayList.add(appointment);
+                                  }
+                                }
+                              }));
                         },
                         child: const Icon(Icons.add),
                       ),
@@ -87,39 +131,43 @@ class _ScheduleViewState extends State<ScheduleView> {
                   ),
                 ),
               ),
-              TableCalendar(
-                focusedDay: today,
-                firstDay: DateTime.utc(2020),
-                lastDay: DateTime.utc(2040),
-                calendarFormat: calendarFormat,
-                headerStyle: const HeaderStyle(
-                  titleCentered: true,
-                  formatButtonVisible: false,
-                ),
-                calendarStyle: const CalendarStyle(
-                  todayDecoration: BoxDecoration(
-                    color: kLightColor,
-                    shape: BoxShape.circle,
-                  ),
-                  selectedDecoration: BoxDecoration(
-                    color: kPrimaryColor,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                selectedDayPredicate: (day) => isSameDay(day, today),
-                onDaySelected: onDaySelected,
-              ),
+
+              // calendar widget
               Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: const [
-                    Schedule(),
-                    SizedBox(height: 20),
-                    Schedule(),
-                    SizedBox(height: 20),
-                    Schedule(),
-                  ],
+                padding: const EdgeInsets.only(bottom: 10),
+                child: TableCalendar(
+                  focusedDay: today,
+                  firstDay: DateTime.utc(2020),
+                  lastDay: DateTime.utc(2040),
+                  calendarFormat: calendarFormat,
+                  headerStyle: const HeaderStyle(
+                    titleCentered: true,
+                    formatButtonVisible: false,
+                  ),
+                  calendarStyle: const CalendarStyle(
+                    todayDecoration: BoxDecoration(
+                      color: kLightColor,
+                      shape: BoxShape.circle,
+                    ),
+                    selectedDecoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  selectedDayPredicate: (day) => isSameDay(day, today),
+                  onDaySelected: onDaySelected,
                 ),
+              ),
+
+              // appointments list
+              ListView.builder(
+                itemCount: displayList.length,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final item = displayList[index];
+                  return ScheduleItem(item);
+                },
               ),
             ],
           ),

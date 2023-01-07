@@ -7,10 +7,16 @@ class Greeting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    final local = MaterialLocalizations.of(context);
+    final time = local.formatTimeOfDay(TimeOfDay.now());
+    bool timeOfDay = true;
+    if (time.contains('PM')) {
+      timeOfDay = false;
+    }
+    return Expanded(
       child: Text(
-        'Good Morning, Paul',
-        style: TextStyle(
+        timeOfDay ? 'Good Morning, Paul' : 'Good Day, Paul',
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 25,
         ),

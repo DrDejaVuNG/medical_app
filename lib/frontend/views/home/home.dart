@@ -1,11 +1,13 @@
-import 'widgets/date.dart';
+import 'package:provider/provider.dart';
+
+import '../../../providers/page_state.dart';
 import 'widgets/greeting.dart';
 import 'widgets/pill_card.dart';
+import 'package:intl/intl.dart';
 import 'widgets/health_card.dart';
 import 'package:flutter/material.dart';
 import 'widgets/appointment_card.dart';
 import 'widgets/appointment_count.dart';
-import '../schedule/schedule_view.dart';
 import 'package:medical_app/config/constants.dart';
 
 class HomeView extends StatelessWidget {
@@ -13,15 +15,25 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = Provider.of<PageState>(context);
+    String date = DateFormat('d MMMM').format(DateTime.now());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: Date(),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                child: Text(
+                  'Today, $date',
+                  style: const TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -62,11 +74,7 @@ class HomeView extends StatelessWidget {
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ScheduleView()),
-                        );
+                        state.schedule();
                       },
                       child: const Text(
                         'See all',
