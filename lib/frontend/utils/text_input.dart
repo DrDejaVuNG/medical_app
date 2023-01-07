@@ -7,12 +7,14 @@ class TextInput extends StatelessWidget {
     this.inputType,
     required this.icon,
     required this.text,
+    required this.controller,
   }) : super(key: key);
 
   final String text;
   final Widget icon;
   final String? value;
   final TextInputType? inputType;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class TextInput extends StatelessWidget {
       height: size.height * 0.07,
       width: size.width * 0.9,
       child: TextFormField(
+        controller: controller,
         initialValue: value,
         keyboardType: inputType,
         decoration: InputDecoration(

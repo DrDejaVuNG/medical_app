@@ -1,17 +1,21 @@
+import 'package:medical_app/frontend/utils/password_input.dart';
+import 'package:medical_app/frontend/utils/text_input.dart';
+
 import '../../sign_up/sign_up.dart';
 import 'package:flutter/material.dart';
-import '../../login/widgets/form.dart';
 import '../../../utils/account_check_nav.dart';
 import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/frontend/utils/bottom_nav.dart';
 import 'package:medical_app/frontend/utils/rounded_button.dart';
 
 class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+  Body({Key? key}) : super(key: key);
 
-  void logUserIn() {
-    
-  }
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+
+  void logUserIn() {}
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,29 @@ class Body extends StatelessWidget {
           children: [
             Image.asset('assets/images/login.jpg'),
             const SizedBox(height: 5),
-            const FormWidget(),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  TextInput(
+                    controller: email,
+                    icon: const Icon(Icons.alternate_email),
+                    text: 'Email ID',
+                    inputType: TextInputType.emailAddress,
+                  ),
+                  PasswordInput(controller: password),
+                ],
+              ),
+            ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
