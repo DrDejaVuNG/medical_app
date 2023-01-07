@@ -34,10 +34,3 @@ class AppointmentModel {
   @HiveField(4)
   final Color selectedColor;
 }
-
-AppointmentModel model = AppointmentModel(
-  title: 'title',
-  time: 'time',
-  date: 'date',
-  selectedColor: Colors.black,
-);
