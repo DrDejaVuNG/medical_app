@@ -6,7 +6,7 @@ part of 'appointment_model.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class AppointmentAdapter extends TypeAdapter<AppointmentModel> {
+class AppointmentModelAdapter extends TypeAdapter<AppointmentModel> {
   @override
   final int typeId = 0;
 
@@ -46,7 +46,7 @@ class AppointmentAdapter extends TypeAdapter<AppointmentModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AppointmentAdapter &&
+      other is AppointmentModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
