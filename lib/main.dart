@@ -1,31 +1,36 @@
-import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:medical_app/frontend/views/auth/auth_view.dart';
-import 'package:provider/provider.dart';
-import 'models/appointment_model.dart';
-import 'providers/appointment_state.dart';
-import 'providers/input_state.dart';
+import 'models/medication_model.dart';
+import 'models/notification_model.dart';
+import 'providers/refresh.dart';
+import 'config/configuration.dart';
 import 'providers/page_state.dart';
+import 'package:flutter/material.dart';
+import 'models/appointment_model.dart';
+import 'package:provider/provider.dart';
+import 'providers/appointment_state.dart';
+import 'package:medical_app/widget_tree.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
-  // init hive
+  // Init Hive
   await Hive.initFlutter();
 
-  // open a box
-  await Hive.openBox('myBox');
+  // Adapters
+  Hive.registerAdapter(AppointmentModelAdapter());
+  Hive.registerAdapter(MedicationModelAdapter());
+  Hive.registerAdapter(NotificationModelAdapter());
 
-  // adapters
-  Hive.registerAdapter(AppointmentAdapter());
+  // Open Box
+  await Hive.openBox('Box');
 
-  // firebase
+  // Firebase
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
 
-  // run app
+  // Load Data
+  configuration();
+
+  // Run App
   runApp(
     MultiProvider(
       providers: [
@@ -36,7 +41,7 @@ void main() async {
           create: (context) => PageState(),
         ),
         ChangeNotifierProvider(
-          create: (context) => InputState(),
+          create: (context) => RefreshState(),
         ),
       ],
       child: const MyApp(),
@@ -49,13 +54,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Lasu Medical',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const AuthView(),
+      // themeMode: ThemeMode.system,
+      // theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+      // darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+      home: WidgetTree(),
     );
   }
 }
