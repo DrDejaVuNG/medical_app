@@ -1,6 +1,8 @@
-import 'package:uuid/uuid.dart';
+import 'package:hive/hive.dart';
 
-var uuid = const Uuid();
+part 'medication_model.g.dart';
+
+@HiveType(typeId: 1)
 class MedicationModel {
   MedicationModel({
     required this.name,
@@ -8,17 +10,12 @@ class MedicationModel {
     required this.prescription,
   });
 
-  final id = uuid.v1();
-
+  @HiveField(0)
   final String name;
 
+  @HiveField(1)
   final String time;
 
+  @HiveField(2)
   final String prescription;
 }
-
-MedicationModel model = MedicationModel(
-  name: 'name',
-  time: 'time',
-  prescription: 'prescription',
-);

@@ -17,19 +17,21 @@ class AppointmentModelAdapter extends TypeAdapter<AppointmentModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return AppointmentModel(
+      appId: fields[0] as int,
       title: fields[1] as String,
       time: fields[2] as String,
       date: fields[3] as String,
       intColor: fields[4] as int,
+      status: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, AppointmentModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.id)
+      ..write(obj.appId)
       ..writeByte(1)
       ..write(obj.title)
       ..writeByte(2)
@@ -37,7 +39,9 @@ class AppointmentModelAdapter extends TypeAdapter<AppointmentModel> {
       ..writeByte(3)
       ..write(obj.date)
       ..writeByte(4)
-      ..write(obj.intColor);
+      ..write(obj.intColor)
+      ..writeByte(5)
+      ..write(obj.status);
   }
 
   @override
