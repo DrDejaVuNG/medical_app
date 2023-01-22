@@ -14,4 +14,9 @@ class PageState with ChangeNotifier {
     _index = 1;
     notifyListeners();
   }
+
+  profile() {
+    _index = 3;
+    notifyListeners();
+  }
 }
