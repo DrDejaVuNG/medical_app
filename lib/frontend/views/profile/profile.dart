@@ -1,13 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/frontend/views/auth/auth.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
-
-  void logUserOut() async {
-    FirebaseAuth.instance.signOut;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: logUserOut,
+                      onTap: Auth().logUserOut,
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
@@ -95,7 +91,7 @@ class ProfileView extends StatelessWidget {
                 Row(
                   children: [
                     Container(
-                      width: size.width * 0.42,
+                      width: size.width * 0.416,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.red.shade100,
@@ -118,7 +114,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     const SizedBox(width: 25),
                     Container(
-                      width: size.width * 0.42,
+                      width: size.width * 0.416,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.green.shade100,

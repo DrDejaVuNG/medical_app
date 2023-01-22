@@ -5,14 +5,14 @@ class RoundedButton extends StatelessWidget {
   const RoundedButton({
     Key? key,
     this.border,
-    required this.text,
+    required this.widget,
     required this.width,
     required this.action,
     this.color = kPrimaryColor,
     this.textColor = Colors.white,
   }) : super(key: key);
 
-  final String text;
+  final Widget widget;
   final double width;
   final BoxBorder? border;
   final void Function() action;
@@ -38,7 +38,7 @@ class RoundedButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15))),
         onPressed: action,
-        child: Text(text),
+        child: widget,
       ),
     );
   }
