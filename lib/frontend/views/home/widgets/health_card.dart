@@ -58,23 +58,10 @@ class HealthCard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(width: 3, color: Colors.white54),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        width: 2, color: Colors.transparent),
-                  ),
-                  child: const CircleAvatar(
-                    radius: 30,
-                    backgroundImage:
-                        AssetImage('assets/images/doctor_img.jpg'),
-                  ),
-                ),
+              Image.asset(
+                'assets/images/lined_heart.png',
+                width: 124,
+                color: Colors.white,
               ),
             ],
           ),
