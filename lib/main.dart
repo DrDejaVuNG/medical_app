@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'models/medication_model.dart';
 import 'models/notification_model.dart';
 import 'providers/refresh.dart';
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return const GetMaterialApp(
       title: 'Lasu Medical',
       debugShowCheckedModeBanner: false,
       // themeMode: ThemeMode.system,
