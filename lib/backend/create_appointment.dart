@@ -10,9 +10,10 @@ Future createAppointment({
 }) async {
   // Reference to document
   final docAppointment =
-      FirebaseFirestore.instance.collection('appointments').doc("$appId");
+      FirebaseFirestore.instance.collection('appointments').doc();
 
   final appointment = AppointmentModel(
+    fID: docAppointment.id,
     appId: appId,
     title: title,
     time: time,
