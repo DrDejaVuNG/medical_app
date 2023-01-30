@@ -2,9 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import '../appointment/new_appointment.dart';
 import '../../../databases/appointment_db.dart';
-import 'package:medical_app/config/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:medical_app/models/appointment_model.dart';
 import 'package:medical_app/frontend/views/schedule/widgets/schedule.dart';
 
 class ScheduleView extends StatefulWidget {
@@ -21,20 +19,8 @@ class _ScheduleViewState extends State<ScheduleView> {
   @override
   void initState() {
     super.initState();
+    displayList.clear();
     final date = DateFormat('EEEE, MMMM d, y').format(today);
-    if (box.get("APPOINTMENTLIST") == null) {
-      appointmentList.add(
-        AppointmentModel(
-          title: 'New appointment',
-          time: 'Any time',
-          date: date,
-          intColor: 0xff33691e,
-        ),
-      );
-    } else {
-      loadData();
-    }
-
     for (var appointment in appointmentList) {
       if (appointment.date == date) {
         displayList.add(appointment);
@@ -78,11 +64,10 @@ class _ScheduleViewState extends State<ScheduleView> {
             children: [
               // topbar
               Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+                decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: kPrimaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       width: 2,
                     ),
                   ),
@@ -112,27 +97,6 @@ class _ScheduleViewState extends State<ScheduleView> {
                         },
                         child: const Icon(Icons.today),
                       ),
-                      const SizedBox(width: 15),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AppointNew(),
-                            ),
-                          ).then((value) => setState(() {
-                                displayList.clear();
-                                final date =
-                                    DateFormat('EEEE, MMMM d, y').format(today);
-                                for (var appointment in appointmentList) {
-                                  if (appointment.date == date) {
-                                    displayList.add(appointment);
-                                  }
-                                }
-                              }));
-                        },
-                        child: const Icon(Icons.add),
-                      ),
                     ],
                   ),
                 ),
@@ -150,13 +114,13 @@ class _ScheduleViewState extends State<ScheduleView> {
                     titleCentered: true,
                     formatButtonVisible: false,
                   ),
-                  calendarStyle: const CalendarStyle(
+                  calendarStyle: CalendarStyle(
                     todayDecoration: BoxDecoration(
-                      color: kLightColor,
+                      color: Theme.of(context).colorScheme.secondaryContainer,
                       shape: BoxShape.circle,
                     ),
                     selectedDecoration: BoxDecoration(
-                      color: kPrimaryColor,
+                      color: Theme.of(context).colorScheme.primaryContainer,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -178,6 +142,31 @@ class _ScheduleViewState extends State<ScheduleView> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AppointNew(),
+            ),
+          ).then(
+            (value) => setState(() {
+              displayList.clear();
+              final date = DateFormat('EEEE, MMMM d, y').format(today);
+              for (var appointment in appointmentList) {
+                if (appointment.date == date) {
+                  displayList.add(appointment);
+                }
+              }
+            }),
+          );
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        // backgroundColor: Colors.black87,
+        child: const Icon(Icons.add),
       ),
     );
   }

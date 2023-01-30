@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/frontend/utils/bottom_nav.dart';
-import 'package:medical_app/frontend/views/auth/auth.dart';
+import 'package:medical_app/backend/auth/auth.dart';
 import 'package:medical_app/frontend/views/login/login.dart';
 
 class WidgetTree extends StatelessWidget {

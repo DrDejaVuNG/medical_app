@@ -1,23 +1,19 @@
 import 'package:flutter/widgets.dart';
-import 'package:medical_app/config/constants.dart';
 
 class AppointmentState with ChangeNotifier {
-  String _title = 'Medicine Prescription';
-  String _time = '09:00';
-  String _date = 'December 12, 2022';
-  Color _color = kPrimaryColor;
-  int _added = 0;
+  int _appId = 0;
+  String _title = 'New appointment';
+  String _time = 'Any time';
+  String _date = 'Any Day';
+  String _status = 'Pending';
+  int _intColor = 0xff33691e;
 
+  int get appId => _appId;
   String get title => _title;
   String get time => _time;
   String get date => _date;
-  Color get color => _color;
-  int get added => _added;
-
-  void isAdded() {
-    _added++;
-    notifyListeners();
-  }
+  String get status => _status;
+  int get intColor => _intColor;
 
   void onEdit(title, time, date, color, trueTime, trueDate) {
     _title = title;
@@ -28,16 +24,25 @@ class AppointmentState with ChangeNotifier {
       _date = date;
     }
 
-    _color = color;
+    _intColor = color;
 
     notifyListeners();
   }
 
-  void onAdd(title, time, date, color) {
+  void onAdd({
+    required appId,
+    required title,
+    required time,
+    required date,
+    required status,
+    required intColor,
+  }) {
+    _appId = appId;
     _title = title;
     _time = time;
     _date = date;
-    _color = color;
+    _status = status;
+    _intColor = intColor;
 
     notifyListeners();
   }

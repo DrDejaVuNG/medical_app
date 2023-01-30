@@ -11,10 +11,10 @@ class HealthCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: 150,
-        padding: const EdgeInsets.all(15),
+        height: 155,
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.black87,
+          color: Colors.black,
           borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(

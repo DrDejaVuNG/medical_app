@@ -1,22 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/backend/appointment/update_appointment.dart';
 
 class AppointView extends StatelessWidget {
   const AppointView({
     super.key,
+    required this.appId,
     required this.title,
     required this.time,
     required this.date,
-    required this.color,
+    required this.status,
+    required this.statusColor,
   });
 
+  final int appId;
   final String title;
   final String time;
   final String date;
-  final Color color;
+  final String status;
+  final Color statusColor;
+
+  void cancel(context) {
+    if (status != 'Cancelled' && status != 'Completed') {
+      updateAppointment('$appId', 'Cancelled');
+    }
+    Navigator.pop(context);
+  }
+
+  void markDone(context) {
+    if (status != 'Completed' && status != 'Cancelled') {
+      updateAppointment('$appId', 'Completed');
+    }
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // final state = Provider.of<AppointmentState>(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -33,73 +51,53 @@ class AppointView extends StatelessWidget {
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) {
-                        //       state.onAdd(title, time, date, color);
-                        //       return const AppointEdit();
-                        //     },
-                        //   ),
-                        // );
+                    PopupMenuButton<MenuItems>(
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: MenuItems.cancel,
+                          child: Text('Cancel Appointment'),
+                        ),
+                        const PopupMenuItem(
+                          value: MenuItems.done,
+                          child: Text('Mark As Done'),
+                        ),
+                      ],
+                      onSelected: (value) {
+                        switch (value) {
+                          case MenuItems.cancel:
+                            cancel(context);
+                            break;
+                          case MenuItems.done:
+                            markDone(context);
+                            break;
+                          default:
+                        }
                       },
-                      splashRadius: 30,
-                      icon: const Icon(Icons.edit_outlined),
                     ),
                   ],
                 ),
                 const SizedBox(height: 40),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20),
-                  child: Image.asset('assets/images/doctor_img.jpg', scale: 6),
+                  child: Image.asset('assets/images/logo.png', scale: 6),
                 ),
                 const SizedBox(height: 20),
                 const Text(
-                  'Dr Dylan Cooper',
+                  'Lagos State University',
                   style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Status: $status',
+                  style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
                   ),
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  'General & Internal Medicine',
-                  style: TextStyle(),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 30,
-                        ),
-                        backgroundColor: kPrimaryColor,
-                        primary: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15))),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.message_rounded),
-                        SizedBox(width: 10),
-                        Text(
-                          'Contact Doctor',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 30),
                 Padding(
                   padding: const EdgeInsets.only(left: 15),
                   child: Column(
@@ -111,7 +109,7 @@ class AppointView extends StatelessWidget {
                             height: 20,
                             width: 20,
                             decoration: BoxDecoration(
-                              color: color,
+                              color: statusColor,
                               borderRadius: BorderRadius.circular(5),
                             ),
                           ),
@@ -168,6 +166,28 @@ class AppointView extends StatelessWidget {
                           ),
                         ],
                       ),
+                      const SizedBox(height: 25),
+                      Row(
+                        children: [
+                          const SizedBox(width: 7),
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: statusColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            status,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -176,61 +196,11 @@ class AppointView extends StatelessWidget {
           ),
         ),
       ),
-      bottomSheet: BottomSheet(
-        onClosing: () {},
-        elevation: 5,
-        builder: (context) {
-          return SizedBox(
-            height: 55,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              color: kPrimaryColor,
-              child: Row(
-                children: [
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.cancel_outlined,
-                          color: Colors.white,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Cancel',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 25),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.check_circle_outline,
-                          color: Colors.white,
-                        ),
-                        SizedBox(width: 5),
-                        Text(
-                          'Done',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
+}
+
+enum MenuItems {
+  cancel,
+  done,
 }

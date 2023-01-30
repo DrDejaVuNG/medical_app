@@ -1,35 +1,59 @@
-import 'package:hive_flutter/adapters.dart';
-import 'package:uuid/uuid.dart';
+import 'package:hive/hive.dart';
 
 part 'appointment_model.g.dart';
 
-var uuid = const Uuid();
-
-@HiveType(typeId: 0, adapterName: 'AppointmentAdapter')
+@HiveType(typeId: 0)
 class AppointmentModel {
   AppointmentModel({
+    this.fID,
+    required this.appId,
     required this.title,
     required this.time,
     required this.date,
-    required this.intColor,
+    required this.userId,
+    this.status = 'Pending',
   });
 
   @HiveField(0)
-  final id = uuid.v1();
-
+  int appId;
 
   @HiveField(1)
-  final String title;
-
+  String title;
 
   @HiveField(2)
-  final String time;
-
+  String time;
 
   @HiveField(3)
-  final String date;
-
+  String date;
 
   @HiveField(4)
-  final int intColor;
+  String status;
+
+  @HiveField(5)
+  String? fID;
+
+  @HiveField(6)
+  int userId;
+
+  Map<String, dynamic> toJson() => {
+        'id': appId,
+        'fID': fID,
+        'title': title,
+        'time': time,
+        'date': date,
+        'status': status,
+        'userId': userId,
+      };
+
+  factory AppointmentModel.fromJson(Map<String, dynamic> json) {
+    return AppointmentModel(
+      fID: json['fID'],
+      appId: json['id'],
+      title: json['title'],
+      time: json['time'],
+      date: json['date'],
+      status: json['status'],
+      userId: json['userId'],
+    );
+  }
 }

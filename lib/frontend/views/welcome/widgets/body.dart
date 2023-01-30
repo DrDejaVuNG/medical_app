@@ -26,7 +26,7 @@ class Body extends StatelessWidget {
             const SizedBox(height: 10),
             Image.asset('assets/images/welcome.jpg'),
             RoundedButton(
-              text: 'LOGIN',
+              widget: const Text('LOGIN'),
               textColor: Colors.white,
               color: kPrimaryColor,
               width: MediaQuery.of(context).size.width * 0.8,
@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: 'SIGN UP',
+              widget: const Text('SIGN UP'),
               textColor: kPrimaryColor,
               color: kPrimaryLightColor,
               border: Border.all(

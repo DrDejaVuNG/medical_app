@@ -1,24 +1,23 @@
-import 'appointment_db.dart';
+import 'user_db.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_app/databases/medication_db.dart';
-import 'package:medical_app/backend/get_appointments.dart';
+import 'package:medical_app/models/appointment_model.dart';
 import 'package:medical_app/models/notification_model.dart';
+import 'package:medical_app/components/local_notification.dart';
 
-DateTime date = DateTime.now();
-DateTime time = DateTime.now();
-final trueTime = DateFormat('jm').format(time);
-final trueDate = DateFormat('MMMM d').format(date);
+final trueTime = DateFormat('jm').format(DateTime.now());
+final trueDate = DateFormat('MMMM d').format(DateTime.now());
 
-List notifications = [];
+List notificationList = [];
 List exNotifications = [];
 
 void storeNotifications() {
-  box.put('NOTIFICATIONS', notifications);
+  box.put('NOTIFICATIONS', notificationList);
 }
 
 void getNotifications() {
   if (box.get('NOTIFICATIONS') != null) {
-    notifications = box.get('NOTIFICATIONS');
+    notificationList = box.get('NOTIFICATIONS');
   }
 }
 
@@ -36,35 +35,28 @@ void createNotification({
     date: date,
     description: description,
   );
-  if (box.get('NOTIFICATIONS') != null) {
-    exNotifications = box.get('NOTIFICATIONS');
-    for (var existing in exNotifications) {
-      if (existing.id != notification.id) {
-        notifications.add(notification);
-        storeNotifications();
-      }
-    }
-  } else {
-    notifications.add(notification);
-    storeNotifications();
-  }
+  notificationList.add(notification);
+  storeNotifications();
+  showNotification(
+    id: id,
+    title: title,
+    description: description,
+  );
 }
 
-void appNotification() {
-  for (var appointment in appointmentData) {
-    var status = appointment.status;
-    if (status != 'Pending') {
-      createNotification(
-        id: appointment.appId,
-        title: 'Appointment Details',
-        time: trueTime,
-        date: trueDate,
-        description: 'Your appointment has been $status',
-      );
-    }
-  }
+// Appointment Notification
+void appNotification(AppointmentModel appointment) {
+  var status = appointment.status;
+  createNotification(
+    id: appointment.appId,
+    title: 'Appointment Details',
+    time: trueTime,
+    date: trueDate,
+    description: 'Your appointment has been $status',
+  );
 }
 
+// Medication Notification
 void medNotification() {
   for (var pill in pillList) {
     if (pill.time != trueTime) {

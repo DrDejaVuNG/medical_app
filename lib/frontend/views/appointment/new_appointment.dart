@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_app/config/constants.dart';
 import 'package:medical_app/databases/appointment_db.dart';
-import 'package:medical_app/models/appointment_model.dart';
-import 'package:o_color_picker/o_color_picker.dart';
-import 'package:o_popup/o_popup.dart';
 
 class AppointNew extends StatefulWidget {
   const AppointNew({super.key});
@@ -13,22 +9,11 @@ class AppointNew extends StatefulWidget {
 }
 
 class _AppointNewState extends State<AppointNew> {
-  AppointmentDB db = AppointmentDB();
-
   DateTime date = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
   String? trueDate;
   String? trueTime;
   String? title;
-  Color selectedColor = const Color(0xff33691e);
-
-  // change color
-  onColorChange(color) {
-    setState(() {
-      selectedColor = color;
-    });
-    Navigator.pop(context);
-  }
 
   // change time
   timeSelection(BuildContext context) async {
@@ -64,18 +49,17 @@ class _AppointNewState extends State<AppointNew> {
   }
 
   // save new appointment
-  void saveNewTask() {
-    AppointmentModel appointment = AppointmentModel(
-      title: title.toString(),
-      time: trueTime.toString(),
-      date: trueDate.toString(),
-      intColor: selectedColor.value,
-    );
-    setState(() {
-      appointmentList.add(appointment);
-    });
-    db.updateDataBase();
-    Navigator.of(context).pop();
+  void saveAppointment() {
+    if (title != null && trueTime != null) {
+      if (trueDate != null) {
+        saveData(
+          title: title.toString(),
+          time: trueTime.toString(),
+          date: trueDate.toString(),
+        );
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   @override
@@ -95,21 +79,22 @@ class _AppointNewState extends State<AppointNew> {
                   ),
                   const Spacer(),
                   GestureDetector(
-                    onTap: () => saveNewTask(),
+                    onTap: () => saveAppointment(),
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 20,
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: kPrimaryColor,
+                        color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Add',
                         style: TextStyle(
                           fontSize: 15,
-                          color: Colors.white,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -123,7 +108,7 @@ class _AppointNewState extends State<AppointNew> {
                     bottom: BorderSide(color: Colors.grey.shade300),
                   ),
                 ),
-                padding: const EdgeInsets.only(left: 45),
+                padding: const EdgeInsets.only(left: 40),
                 child: TextFormField(
                   style: const TextStyle(fontSize: 22),
                   decoration: const InputDecoration(
@@ -140,47 +125,6 @@ class _AppointNewState extends State<AppointNew> {
                 ),
               ),
               const SizedBox(height: 10),
-              OPopupTrigger(
-                barrierAnimationDuration: const Duration(milliseconds: 200),
-                triggerWidget: Container(
-                  height: 65,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(color: Colors.grey.shade300),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(width: 2),
-                      Container(
-                        height: 20,
-                        width: 20,
-                        decoration: BoxDecoration(
-                          color: selectedColor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          'Pick a color',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                popupContent: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      OColorPicker(
-                        selectedColor: selectedColor,
-                        onColorChange: onColorChange,
-                      ),
-                    ]),
-              ),
               GestureDetector(
                 onTap: () => timeSelection(context),
                 child: Container(

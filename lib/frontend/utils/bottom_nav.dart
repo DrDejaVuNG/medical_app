@@ -2,7 +2,6 @@ import 'package:provider/provider.dart';
 import '../../providers/page_state.dart';
 import '../views/home/home.dart';
 import 'package:flutter/material.dart';
-import 'package:medical_app/config/constants.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:medical_app/frontend/views/profile/profile.dart';
@@ -24,28 +23,28 @@ class BottomNav extends StatelessWidget {
         const ProfileView(),
       ].elementAt(index),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: Colors.black,
+        decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
               width: 2,
-              color: kPrimaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: GNav(
+            haptic: false,
+            duration: const Duration(milliseconds: 400),
             onTabChange: (value) {
               state.setCurrentIndex(value);
             },
             gap: 8,
             selectedIndex: index,
-            color: Colors.white,
-            activeColor: Colors.white,
-            backgroundColor: Colors.black,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
+            activeColor: Theme.of(context).colorScheme.onPrimaryContainer,
             padding: const EdgeInsets.all(6),
-            tabBackgroundColor: Colors.grey.shade800,
+            tabBackgroundColor: Theme.of(context).colorScheme.primaryContainer,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             tabs: [
               GButton(

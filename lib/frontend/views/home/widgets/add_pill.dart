@@ -3,6 +3,7 @@ import 'package:medical_app/databases/medication_db.dart';
 import 'package:medical_app/providers/refresh.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class AddPill extends StatelessWidget {
   AddPill({
     Key? key,
@@ -10,7 +11,22 @@ class AddPill extends StatelessWidget {
 
   final drugName = TextEditingController();
   final prescription = TextEditingController();
-  final time = TextEditingController();
+  TimeOfDay time = TimeOfDay.now();
+  String? trueTime;
+
+  // change time
+  timeSelection(context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null && picked != time) {
+      time = picked;
+      final local = MaterialLocalizations.of(context);
+      final timeFormat = local.formatTimeOfDay(time);
+      trueTime = timeFormat;
+    }
+  }
 
   void addDialog(context) {
     showDialog(
@@ -51,12 +67,54 @@ class AddPill extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   // Time
-                  TextField(
-                    controller: time,
-                    decoration: const InputDecoration(
-                      labelText: 'Time',
-                      hintText: 'Enter time',
-                      border: OutlineInputBorder(),
+                  GestureDetector(
+                    onTap: () => timeSelection(context),
+                    child: Container(
+                      height: 65,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 1.2,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            left: BorderSide(
+                              width: 1.2,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            right: BorderSide(
+                              width: 1.2,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                            bottom: BorderSide(
+                              width: 1.2,
+                              color: Theme.of(context).colorScheme.outline,
+                            ),
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Row(
+                        children: [
+                          const SizedBox(width: 10),
+                          Icon(
+                            Icons.schedule,
+                            size: 20,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            trueTime == null
+                                ? 'Pick a time'
+                                : trueTime.toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -73,7 +131,7 @@ class AddPill extends StatelessWidget {
                     pillAdd(
                       drugName: drugName.text,
                       prescription: prescription.text,
-                      time: time.text,
+                      time: trueTime,
                     );
                     load.refresh();
                     Navigator.of(context).pop();
@@ -95,13 +153,13 @@ class AddPill extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(3),
         decoration: BoxDecoration(
-          color: Colors.black,
-          borderRadius: BorderRadius.circular(5),
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: const Center(
+        child: Center(
           child: Icon(
             Icons.add,
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.onPrimaryContainer,
           ),
         ),
       ),

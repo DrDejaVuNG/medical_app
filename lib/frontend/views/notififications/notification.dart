@@ -1,20 +1,32 @@
 import 'package:flutter/material.dart';
-import '../../../config/constants.dart';
+import 'package:medical_app/models/notification_model.dart';
 
-class NotificationCard extends StatelessWidget {
-  const NotificationCard({
+class Notification extends StatelessWidget {
+  const Notification({
     Key? key,
+    required this.title,
+    required this.time,
+    required this.date,
+    required this.description,
   }) : super(key: key);
+
+  final String title;
+
+  final String time;
+
+  final String date;
+
+  final String description;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 60,
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: kPrimaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ),
@@ -23,16 +35,17 @@ class NotificationCard extends StatelessWidget {
           SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                SizedBox(height: 8),
+              children: [
+                const SizedBox(height: 8),
                 Text(
-                  'Appointment Details',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  title,
+                  style: const TextStyle(
+                      fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
-                  'Your appointment has been accepted',
-                  style: TextStyle(fontWeight: FontWeight.w400),
+                  description,
+                  style: const TextStyle(fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -40,18 +53,18 @@ class NotificationCard extends StatelessWidget {
           const Spacer(),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                'Time',
-                style: TextStyle(
+                time,
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(height: 5),
+              const SizedBox(height: 5),
               Text(
-                'Date',
-                style: TextStyle(
+                date,
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
                 ),
@@ -62,4 +75,14 @@ class NotificationCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class NotificationItem extends Notification {
+  NotificationItem(NotificationModel item, {super.key})
+      : super(
+          title: item.title,
+          time: item.time,
+          date: item.date,
+          description: item.description,
+        );
 }

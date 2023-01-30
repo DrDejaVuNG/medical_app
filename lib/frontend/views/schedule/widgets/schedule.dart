@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/models/appointment_model.dart';
 import '../../appointment/view_appointment.dart';
-import 'package:medical_app/config/constants.dart';
 
 class Schedule extends StatelessWidget {
   const Schedule({
     Key? key,
+    required this.id,
     required this.title,
     required this.time,
     required this.date,
-    required this.intColor,
+    required this.status,
   }) : super(key: key);
 
+  final int id;
   final String title;
   final String time;
   final String date;
-  final int intColor;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
-    Color color = Color(intColor);
+    Color statusColor = Colors.yellow.shade600;
+    if (status == 'Accepted' || status == 'Completed') {
+      statusColor = Colors.green.shade600;
+    }
+    if (status == 'Declined') {
+      statusColor = Colors.red.shade600;
+    }
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
       child: Row(
@@ -44,10 +51,12 @@ class Schedule extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => AppointView(
+                    appId: id,
                     title: title,
                     time: time,
-                    color: color,
                     date: date,
+                    status: status,
+                    statusColor: statusColor,
                   ),
                 ),
               );
@@ -59,7 +68,7 @@ class Schedule extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.675,
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: color,
+                    color: statusColor,
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
@@ -69,7 +78,7 @@ class Schedule extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.65,
                   padding: const EdgeInsets.all(15),
                   decoration: BoxDecoration(
-                    color: kPrimaryColor,
+                    color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(25),
                   ),
                   child: Column(
@@ -81,48 +90,68 @@ class Schedule extends StatelessWidget {
                           const CircleAvatar(
                             radius: 20,
                             backgroundImage:
-                                AssetImage('assets/images/doctor_img.jpg'),
+                                AssetImage('assets/images/logo.png'),
                           ),
                           const SizedBox(width: 15),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
-                              SizedBox(height: 5),
+                            children: [
+                              const SizedBox(height: 5),
                               Text(
-                                'Dr Dylan Cooper',
+                                title,
                                 style: TextStyle(
                                   letterSpacing: 1,
-                                  color: Colors.white,
-                                  fontSize: 16,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Text(
-                                'General & Internal Medicine',
+                                'Lagos State University',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onPrimaryContainer,
+                                  fontSize: 12,
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
+                      const SizedBox(height: 20),
+                      Row(
+                        children: [
+                          const SizedBox(width: 5),
+                          Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                              color: statusColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            status,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onPrimaryContainer,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -132,9 +161,10 @@ class Schedule extends StatelessWidget {
 class ScheduleItem extends Schedule {
   ScheduleItem(AppointmentModel item, {super.key})
       : super(
+          id: item.appId,
           title: item.title,
           time: item.time,
           date: item.date,
-          intColor: item.intColor,
+          status: item.status.toString(),
         );
 }

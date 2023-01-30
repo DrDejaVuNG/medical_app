@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_app/config/constants.dart';
+import 'package:medical_app/databases/notification_db.dart';
 
 import 'notification.dart';
 
@@ -10,15 +10,15 @@ class NotifyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
+        physics: const ScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
-                    color: kPrimaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     width: 2,
                   ),
                 ),
@@ -53,15 +53,15 @@ class NotifyView extends StatelessWidget {
                 ),
               ),
             ),
-            Flexible(
-              child: ListView.builder(
-                itemCount: 15,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return const NotificationCard();
-                },
-              ),
+            ListView.builder(
+              itemCount: notificationList.length,
+              reverse: true,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                var item = notificationList[index];
+                return NotificationItem(item);
+              },
             ),
           ],
         ),

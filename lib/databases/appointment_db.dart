@@ -1,27 +1,20 @@
+import 'user_db.dart';
+import 'package:get/get.dart';
 import '../models/appointment_model.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:medical_app/backend/create_appointment.dart';
+import 'package:medical_app/providers/refresh.dart';
+import 'package:medical_app/databases/notification_db.dart';
+import 'package:medical_app/backend/appointment/get_appointments.dart';
+import 'package:medical_app/backend/appointment/create_appointment.dart';
+
+final load = Get.put(RefreshState());
 
 List appointmentList = [];
 
 List<AppointmentModel> displayList = [];
 
-// reference our box
-var box = Hive.box('Box');
-
-// id
-int id = 0;
-
-void storeId() {
-  box.put("ID", id);
-}
-
-void getID() {
-  id = box.get("ID");
-}
-
 void storeData() {
   box.put("APPOINTMENTLIST", appointmentList);
+  load.refresh();
 }
 
 void loadData() {
@@ -33,7 +26,6 @@ void saveData({
   required title,
   required time,
   required date,
-  required intColor,
 }) {
   // get id
   if (box.get("ID") != null) {
@@ -42,12 +34,15 @@ void saveData({
     appointmentList.clear();
   }
 
+  int appId = ++id;
+  String fID = userId.toString() + appId.toString();
   AppointmentModel appointment = AppointmentModel(
-    appId: ++id,
+    fID: fID,
+    appId: appId,
     title: title,
     time: time,
     date: date,
-    intColor: intColor,
+    userId: userId,
   );
   appointmentList.add(appointment);
 
@@ -57,10 +52,31 @@ void saveData({
 
   // Cloud Storage
   createAppointment(
+    fID: fID,
     appId: appointment.appId,
     title: appointment.title,
     time: appointment.time,
     date: appointment.date,
-    intColor: appointment.intColor,
   );
+}
+
+void rewriteAppointment() {
+  for (var appointment in appointmentData) {
+    var status = appointment.status;
+    if (status != 'Pending') {
+      // Fetch Modified Appointment
+      final index = appointmentList
+          .indexWhere((element) => element.appId == appointment.appId);
+      var indexStatus = appointmentList[index].status;
+
+      // Replace Appointment
+      if (indexStatus == 'Pending') {
+        appointmentList[index] = appointment;
+        storeData();
+
+        // Create Notification
+        appNotification(appointment);
+      }
+    }
+  }
 }
