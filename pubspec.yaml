@@ -66,8 +66,7 @@ dependencies:
   connectivity:
 
   # notifications
-  # rxdart: ^0.27.7
-  # flutter_local_notifications: ^7.0.0
+  flutter_local_notifications: ^13.0.0
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
